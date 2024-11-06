@@ -1,0 +1,31 @@
+﻿@model IEnumerable<BanSach.Model.Product>
+
+<!--hiện thị khi thành công-->
+<partial name="_Notification" />
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2>Product List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary">Create New Product</a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered" id="tblData">
+    <thead>
+      
+            <th>Name</th>
+            <th>ISBN</th>
+            <th>Author</th>
+            <th>Category</th>
+               <th></th>
+       
+    </thead>
+  
+</table>
+
+@section Scripts {
+    <script src="~/js/product.js"></script>
+}

@@ -1,0 +1,29 @@
+﻿<!--hiện thị tempdata-->
+<!--
+        @if (TempData["Success"] != null)
+            {
+                    <div class="alert alert-success" role="alert">
+                    @TempData["Success"]
+                    </div>
+            }
+-->
+
+<!--sử dụng toastr-->
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" ></script>   
+    
+    <script>
+        toastr.success('@TempData["Success"]')
+    </script>
+}
+ 
+@if (TempData["Error"] != null)
+{
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        toastr.success('@TempData["Error"]');
+    </script>
+}

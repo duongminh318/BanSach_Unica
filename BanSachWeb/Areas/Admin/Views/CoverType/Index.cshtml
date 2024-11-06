@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BanSach.Model.CoverType>
+
+<!--hiện thị khi thành công-->
+
+<partial name="_Notification" />
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2> Cover Type List</h2>
+        </div>
+
+        <div class="col-6 text-end">
+            <a asp-controller="CoverType" asp-action="Create" class="btn btn-primary"> Create New</a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>          
+            <th>Name</th>
+        
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>     
+                <td>@category.Name</td>
+                
+                <td>
+                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id"> Edit</a> |
+                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

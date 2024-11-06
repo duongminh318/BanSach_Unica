@@ -1,0 +1,150 @@
+﻿
+@model BanSach.Model.ViewModel.ProductVM
+
+<!---->
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <div class="border p-3 mt-4">
+        <!--tiêu đề form-->
+        <div class="row pb-2">
+            <h2>@(Model.product.Id != 0 ? "Update" : "Create") Product</h2>
+            <hr />
+        </div>
+          <div asp-validation-summary=All></div> 
+       
+     
+        <!--mấy ô nhập liệu-->
+        <div class="mb-3">
+            <label asp-for="product.Name">Title</label> 
+            <input asp-for="product.Name" class="form-control" />
+            <span asp-validation-for="product.Name" class="text-danger"></span>
+        </div>
+
+      
+        <div class="mb-3">
+            <label asp-for="product.Description">Description</label>
+            <textarea asp-for="product.Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="product.Description" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="mb-3 col-6">
+                <label asp-for="product.ISBN">ISBN</label>
+                <input asp-for="product.ISBN" class="form-control" />
+                <span asp-validation-for="product.ISBN" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 col-6">
+                <label asp-for="product.Author">Author</label>
+                <input asp-for="product.Author" class="form-control" />
+                <span asp-validation-for="product.Author" class="text-danger"></span>
+            </div>
+        </div>
+
+       
+
+        <!--không biết khúc này đâu ra-->
+       @*  <div class="mb-3">
+            <label asp-for="ListPrice">ListPrice</label>
+            <input asp-for="ListPrice" class="form-control" />
+            <span asp-validation-for="ListPrice" class="text-danger"></span>
+        </div> *@
+
+        <div class="row">
+            <div class="mb-3 col-6">
+                <label asp-for="product.Price50">Price50</label>
+                <input asp-for="product.Price50" class="form-control" />
+                <span asp-validation-for="product.Price50" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 col-6">
+                <label asp-for="product.Price100">Price100</label>
+                <input asp-for="product.Price100" class="form-control" />
+                <span asp-validation-for="product.Price100" class="text-danger"></span>
+            </div>
+        </div>
+
+    
+
+        <!--upload image-->
+        <div class="mb-3">
+            <label asp-for="product.ImageUrl">ImageUrl</label>
+            <input type="file" asp-for="product.ImageUrl" name="file" id="ImageUrl" class="form-control" />
+              <span asp-validation-for="product.ImageUrl" class="text-danger"></span>
+        </div>
+
+      
+
+        <!--Category List-->
+
+        <div class="mb-3">
+            <label asp-for="product.CategoryId">Category</label>
+            <!-- /ViewBag.CategoryList/-->   
+            <select asp-for="product.CategoryId" asp-items="Model.CategoryList" class="form-select">
+                <option disabled onselect="">---Select Option---</option>
+            </select>
+
+          
+        </div>
+
+     
+        <!--CoverType List-->
+        <div class="mb-3">
+            <label asp-for="product.CoverTypeId">Cover Type</label>
+            <select asp-for="product.CoverTypeId" asp-items="Model.CoverTypeList" class="form-select">
+                <option disabled onselect="">---Select Option---</option>
+            </select>
+          
+        </div>
+
+
+        @if(Model.product.Id == 0) {
+            <button type="submit" onclick="return validateInput()" class="btn btn-primary"> Create  </button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary"> Update</button>
+        }
+
+        <!--button submit-->
+       
+        <a asp-controller="CoverType" asp-action="Index"> Back to List</a>
+
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+
+    <script>
+        function validateInput() {
+            if (document.getElementById("ImageUrl").value == "") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                    footer: '<a href="#">Please upload an image</a>'
+                });
+                    return false;
+                }
+                return true;
+
+        }
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+    </script>
+}
